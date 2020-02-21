@@ -48,6 +48,9 @@ public:
     void simPause(bool is_paused);
     void simContinueForTime(double seconds);
 
+    // for env-gen
+    void resetUnreal();
+
     virtual ~RpcLibClientBase();    //required for pimpl
 
 protected:

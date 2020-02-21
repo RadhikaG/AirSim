@@ -54,6 +54,7 @@ RpcLibServerBase::RpcLibServerBase(SimModeApiBase* simmode_api, string server_ad
         pimpl_.reset(new impl(server_address, port));
     pimpl_->server.bind("ping", [&]() -> bool { return true; });
 
+    unreal_reset_ = false;
 
     //sim only
     pimpl_->server.bind("simGetImages", [&](const std::vector<RpcLibAdapatorsBase::ImageRequest>& request_adapter) -> vector<RpcLibAdapatorsBase::ImageResponse> {
@@ -132,6 +133,10 @@ RpcLibServerBase::RpcLibServerBase(SimModeApiBase* simmode_api, string server_ad
         getSimModeApi()->continueForTime(seconds); 
     });
 
+    pimpl_->server.bind("resetUnreal", [&]() -> void {
+            setUnrealReset();
+    });
+
     pimpl_->server.suppress_exceptions(true);
 }
 
@@ -167,6 +172,23 @@ void* RpcLibServerBase::getServer() const
 SimModeApiBase* RpcLibServerBase::getSimModeApi() const
 {
     return simmode_api_;
+}
+
+// env-gen
+
+bool RpcLibServerBase::checkUnrealReset()
+{
+    return unreal_reset_;
+}
+
+void RpcLibServerBase::setUnrealReset()
+{
+    unreal_reset_ = true;
+}
+
+void RpcLibServerBase::unSetUnrealReset()
+{
+    unreal_reset_ = false;
 }
 
 

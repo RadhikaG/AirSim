@@ -15,6 +15,11 @@ public:
     virtual void start(bool block = false) = 0;
     virtual void stop() = 0;
     virtual ~ApiServerBase() = default;
+
+    // for environment generation
+    virtual bool checkUnrealReset() = 0;
+    virtual void setUnrealReset() = 0;
+    virtual void unSetUnrealReset() = 0;
 };
 
 }} //namespace

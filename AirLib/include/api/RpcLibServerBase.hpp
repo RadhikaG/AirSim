@@ -30,6 +30,9 @@ private:
     SimModeApiBase* simmode_api_;
     struct impl;
     std::unique_ptr<impl> pimpl_;
+
+    // env-gen
+    bool unreal_reset_;
 };
 
 

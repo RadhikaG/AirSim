@@ -193,6 +193,10 @@ msr::airlib::Pose RpcLibClientBase::simGetObjectPose(const std::string& object_n
     return pimpl_->client.call("simGetObjectPose", object_name).as<RpcLibAdapatorsBase::Pose>().to();
 }
 
+void RpcLibClientBase::resetUnreal()
+{
+    pimpl_->client.call("resetUnreal");
+}
 
 }} //namespace
 
