@@ -442,6 +442,22 @@ class AirSimClientBase:
     def reset(self):
         self.client.call('reset')
 
+    def resetUnreal(self, sleep_time_before=0.1, sleep_time_after=0.1):
+        time.sleep(sleep_time_before) # not sure why this is necessary
+        self.client.call('resetUnreal')
+        # the following is necessary because resetUnreal is done
+        # through setting a local variable through RPC
+        # and later reacting to it in SimMode
+        # which means other rpc calls might take effect
+        # before reset. Hence to ensure the order, we need 
+        # an extra sleep. With Behzad machines
+        # it seems like 30 ms is enough sleep time
+        # althought sometimes it needs 300 ms!!!!
+        time.sleep(sleep_time_after)
+        client = MultirotorClient(ip="127.0.0.1")
+        client.enableApiControl(true)
+        return client
+
     def confirmConnection(self):
         home = self.getHomeGeoPoint()
         while ((home.latitude == 0 and home.longitude == 0 and home.altitude == 0) or
