@@ -42,8 +42,20 @@ void ASimHUD::BeginPlay()
 
 void ASimHUD::Tick(float DeltaSeconds)
 {
+    // this is bad, this should be in SimModeBase.cpp instead, but there's no
+    // way of accessing the rpc server from there
+    checkUnrealReset();
+
     if (simmode_ && simmode_->EnableReport)
         widget_->updateReport(simmode_->getReport());
+}
+
+void ASimHUD::checkUnrealReset()
+{
+    if (api_server_->checkUnrealReset()) {
+        api_server_->unSetUnrealReset();
+        UGameplayStatics::OpenLevel(this, FName(*(this->GetWorld()->GetName()), false));
+    }
 }
 
 void ASimHUD::EndPlay(const EEndPlayReason::Type EndPlayReason)

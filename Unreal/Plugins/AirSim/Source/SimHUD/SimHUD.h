@@ -79,6 +79,9 @@ private:
     void stopApiServer();
     bool isApiServerStarted();
 
+    // for env-gen
+    void checkUnrealReset();
+
 private:
     typedef common_utils::Utils Utils;
     UClass* widget_class_;
