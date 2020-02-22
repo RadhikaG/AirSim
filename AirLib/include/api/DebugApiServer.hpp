@@ -11,6 +11,9 @@ namespace msr { namespace airlib {
 
     class DebugApiServer : public ApiServerBase {
     public:
+		// env-gen
+		bool unreal_reset_;
+
         virtual void start(bool block = false) override
         {
             common_utils::Utils::log("Debug server started");
@@ -19,7 +22,23 @@ namespace msr { namespace airlib {
         {
             common_utils::Utils::log("Debug server stopped");
         }
-        virtual ~DebugApiServer() = default;
+        virtual ~DebugApiServer() override = default;
+
+		// for environment generation
+		virtual bool checkUnrealReset() override
+		{
+			return unreal_reset_;
+		}
+
+		virtual void setUnrealReset() override
+		{
+			unreal_reset_ = true;
+		}
+
+		virtual void unSetUnrealReset() override
+		{
+			unreal_reset_ = false;
+		}
     };
 
 }} //namespace

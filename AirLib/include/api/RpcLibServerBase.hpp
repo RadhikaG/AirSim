@@ -17,6 +17,11 @@ public:
     RpcLibServerBase(SimModeApiBase* simmode_api, string server_address, uint16_t port);
     virtual void start(bool block = false) override;
     virtual void stop() override;
+    // for environment generation
+    virtual bool checkUnrealReset() override;
+    virtual void setUnrealReset() override;
+    virtual void unSetUnrealReset() override;
+
     virtual ~RpcLibServerBase() override;
 
 protected:
