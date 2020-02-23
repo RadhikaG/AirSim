@@ -455,7 +455,7 @@ class AirSimClientBase:
         # althought sometimes it needs 300 ms!!!!
         time.sleep(sleep_time_after)
         client = MultirotorClient(ip="127.0.0.1")
-        client.enableApiControl(true)
+        client.enableApiControl(True)
         return client
 
     def confirmConnection(self):
