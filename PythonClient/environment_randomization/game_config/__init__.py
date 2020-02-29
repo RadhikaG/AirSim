@@ -1,1 +1,3 @@
-from environment_randomization import GameConfigHandler, GameConfigClass
+from .game_config_class import GameConfig
+from .game_config_handler_class import GameConfigHandler
+from .game_config_manipulator_class import GameConfigManipulator

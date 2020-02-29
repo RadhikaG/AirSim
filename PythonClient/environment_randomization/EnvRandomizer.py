@@ -9,6 +9,8 @@ class EnvRandomizer():
     def __init__(self):
         self.game_config_handler = GameConfigHandler()
         self.cur_zone_number_buff = 0
+        # tracks number of times randomized till now
+        self.episodeN = 0
 
         self.airsim_client = airsim.MultirotorClient(ip="127.0.0.1")
         client = self.airsim_client
@@ -31,7 +33,6 @@ class EnvRandomizer():
         self.game_config_handler.populate_zones()
         self.sampleGameConfig()
         self.airsim_reset()
-        time.sleep(5)
 
     def ease_randomization(self):
         for k, v in settings.environment_change_frequency.items():
@@ -67,11 +68,19 @@ class EnvRandomizer():
         self.game_config_handler.sample(*arg)
 
     def airsim_reset(self):
+        self.airsim_client = self.airsim_client.resetUnreal(5)
+
         client = self.airsim_client
-        client.resetUnreal(20)
         client.confirmConnection()
         client.enableApiControl(True)
         client.armDisarm(True)
 
+        self.episodeN += 1
+
+        return self.airsim_client
+
     def get_airsim_client(self):
         return self.airsim_client
+
+    def init_difficulty_level(self, difficulty_level):
+        self.init_again(eval("settings." + difficulty_level + "_range_dic"))

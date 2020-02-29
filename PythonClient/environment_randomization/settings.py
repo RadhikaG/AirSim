@@ -31,6 +31,8 @@ update_zone_window = 1000  # the window within which the  update_zone_accpetable
 # needs to be achieved. Note that at the begining of every
 # new window we zero out the achieved ratio
 
+success_distance_to_goal = 3
+slow_down_activation_distance = 2 * success_distance_to_goal  # detrmines at which distant we will punish the higher velocities
 
 # ------------------------------------------------------------ 
 #                               -space related-
@@ -101,7 +103,7 @@ environment_change_frequency = {"Seed": 1, "NumberOfObjects": 10, "End": 1}
 #ip = '10.243.49.243'
 ip = '127.0.0.1'
 
-ease_constant = 10  # used when not meeting a zone for window_restart_ctr_threshold times. scales the randomization freq
+ease_constant = 2  # used when not meeting a zone for window_restart_ctr_threshold times. scales the randomization freq
 
 # ---------------------------
 # meta data  reload for reproducability
