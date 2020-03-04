@@ -16,7 +16,8 @@ os.sys.path.insert(0, proj_root_path + "/environment_randomization")
 # Machine dependent settings
 # ---------------------------
 
-json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen-ue4-my\\Content\\JsonFiles\\EnvGenConfig.json"
+#json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen-ue4-my\\Content\\JsonFiles\\EnvGenConfig.json"
+json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen-ue4-my\\Build\\WindowsNoEditor\\AirLearning\\Content\\JsonFiles\\EnvGenConfig.json"
 
 # ---------------------------
 # zoning
@@ -58,12 +59,12 @@ medium_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                     "EnvType": ["Indoor"],
                     "ArenaSize": [[60, 60, 20]],
                     "PlayerStart": [[0, 0, 0]],
-                    "NumberOfDynamicObjects": list(range(0, 1)),
+                    "NumberOfDynamicObjects": list(range(3, 6)),
                     "Walls1": [[255, 255, 10]],
                     "Seed": list(range(0, 5000)),
                     "VelocityRange": [[0, 3]],
                     "Name": ["Name"],
-                    "NumberOfObjects": list(range(0, 1))}
+                    "NumberOfObjects": list(range(3, 6))}
 
 hard_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                   "MinimumDistance": [4],
@@ -76,7 +77,7 @@ hard_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                   "Seed": list(range(0, 5000)),
                   "VelocityRange": [[5, 25]],
                   "Name": ["Name"],
-                  "NumberOfObjects": list(range(10, 20))}
+                  "NumberOfObjects": list(range(5, 10))}
 
 # ------------------------------------------------------------
 #                               -game related-

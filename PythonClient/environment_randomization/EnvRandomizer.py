@@ -51,6 +51,7 @@ class EnvRandomizer():
 
         if (len(vars_to_randomize) > 0):
             self.sampleGameConfig(*vars_to_randomize)
+            print("Randomizing env...")
 
     def updateJson(self, *args):
         self.game_config_handler.update_json(*args)
@@ -83,4 +84,5 @@ class EnvRandomizer():
         return self.airsim_client
 
     def init_difficulty_level(self, difficulty_level):
+        #print("EnvRandomizer: " + difficulty_level)
         self.init_again(eval("settings." + difficulty_level + "_range_dic"))

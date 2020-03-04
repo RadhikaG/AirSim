@@ -29,12 +29,13 @@ try:
         client.moveByVelocity(0, 0, -2, 2, drivetrain=0)
         airsim.AirSimClientBase.wait_key('Press any key to randomize')
 
-        if x == 3:
-            env_rand.init_difficulty_level("medium")
-        if x == 6:
-            env_rand.init_difficulty_level("hard")
+        #if x == 3:
+        #    env_rand.init_difficulty_level("medium")
+        #if x == 6:
+        #    env_rand.init_difficulty_level("hard")
+        env_rand.init_difficulty_level("medium")
 
-        env_rand.tight_randomization()
+        env_rand.ease_randomization()
 
 except(KeyboardInterrupt):
     pass
