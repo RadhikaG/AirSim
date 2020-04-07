@@ -86,7 +86,7 @@ def _get_random_end_point(arena_size, split_index, total_num_of_splits):
     return [rnd_idx0, rnd_idx1, grounded_idx2]
 
 
-class GameConfigHandler:
+class AirlearningGameConfigHandler:
     def __init__(self, range_dic=eval("settings.default_range_dic"), zone_dic=eval("settings.zone_dic"),
                  input_file_addr=settings.json_file_addr):
         assert (os.path.isfile(input_file_addr)), input_file_addr + " doesnt exist"

@@ -1,13 +1,13 @@
-import settings
+import roborun_settings
 import AirSimClient as airsim
 
 import os, sys
 import json
-from game_config import GameConfigHandler
+from game_config import AirlearningGameConfigHandler
 
 class EnvRandomizer():
     def __init__(self):
-        self.game_config_handler = GameConfigHandler()
+        self.game_config_handler = AirlearningGameConfigHandler()
         self.cur_zone_number_buff = 0
         # tracks number of times randomized till now
         self.episodeN = 0
