@@ -1,4 +1,4 @@
-import settings
+import roborun_settings
 import os
 from .game_config_class import *
 import copy
@@ -9,7 +9,7 @@ import numpy as np
 def _get_random_end_point(arena_size, split_index, total_num_of_splits):
     # distance from the walls
     wall_halo = floor_halo = roof_halo = 1
-    goal_halo = settings.slow_down_activation_distance + 1
+    goal_halo = roborun_settings.slow_down_activation_distance + 1
 
     sampling_quanta = .5  # sampling increment
 
@@ -22,7 +22,7 @@ def _get_random_end_point(arena_size, split_index, total_num_of_splits):
     idx1_up_pos_bndry = (split_index + 1) * idx1_quanta
     idx2_up_pos_bndry = (split_index + 1) * idx2_quanta
 
-    if (settings.end_randomization_mode == "inclusive"):
+    if (roborun_settings.end_randomization_mode == "inclusive"):
         idx0_low_pos_bndry = 0
         idx1_low_pos_bndry = 0
         idx2_low_pos_bndry = 0
@@ -86,9 +86,9 @@ def _get_random_end_point(arena_size, split_index, total_num_of_splits):
     return [rnd_idx0, rnd_idx1, grounded_idx2]
 
 
-class GameConfigHandler:
-    def __init__(self, range_dic=eval("settings.default_range_dic"), zone_dic=eval("settings.zone_dic"),
-                 input_file_addr=settings.json_file_addr):
+class RoborunGameConfigHandler:
+    def __init__(self, range_dic=eval("roborun_settings.default_range_dic"), zone_dic=eval("roborun_settings.zone_dic"),
+                 input_file_addr=roborun_settings.json_file_addr):
         assert (os.path.isfile(input_file_addr)), input_file_addr + " doesnt exist"
         self.input_file_addr = input_file_addr
         self.cur_game_config = GameConfig(input_file_addr)
@@ -98,9 +98,9 @@ class GameConfigHandler:
         self.zone_dic = zone_dic
         self.total_number_of_zones = 0
         self.populate_zones()
-        #if (settings.use_preloaded_json):
-        #    self.blah = find_meta_data_files_in_time_order(settings.meta_data_folder)
-        #    self.meta_data_files_in_order = iter(find_meta_data_files_in_time_order(settings.meta_data_folder))
+        #if (roborun_settings.use_preloaded_json):
+        #    self.blah = find_meta_data_files_in_time_order(roborun_settings.meta_data_folder)
+        #    self.meta_data_files_in_order = iter(find_meta_data_files_in_time_order(roborun_settings.meta_data_folder))
 
 
     # self.init_range_with_default(range_dic)
@@ -188,6 +188,7 @@ class GameConfigHandler:
 
             range_val = self.game_config_range.get_item(el)[low_bnd:up_bnd]
             random_val = random.choice(range_val)
+            print("random " + el + ": " + str(random_val))
             self.cur_game_config.set_item(el, random_val)
 
         # end
@@ -202,13 +203,13 @@ class GameConfigHandler:
         output_file_handle = open(outputfile, "w")
         json.dump(self.cur_game_config.config_data, output_file_handle)
         output_file_handle.close()
-        #if not( settings.ip == '127.0.0.1'):
+        #if not( roborun_settings.ip == '127.0.0.1'):
         #    utils.copy_json_to_server(outputfile)
-        #    if(settings.use_preloaded_json):
+        #    if(roborun_settings.use_preloaded_json):
         #        outputfile = next(self.meta_data_files_in_order)
         #    utils.copy_json_to_server(outputfile)
 
-        #if(settings.use_preloaded_json):
+        #if(roborun_settings.use_preloaded_json):
         #    outputfile = next(self.meta_data_files_in_order)
         #    utils.copy_json_to_server(outputfile)
     def increment_zone(self, key):
@@ -218,6 +219,14 @@ class GameConfigHandler:
         self.game_config_zones.set_item(key, [ \
             min(low_bnd + incr_size, len(self.game_config_range.get_item(key)) - incr_size),
             min(up_bnd + incr_size, len(self.game_config_range.get_item(key))), incr_size])
+
+    def decrement_zone(self, key):
+        low_bnd = self.game_config_zones.get_item(key)[0]
+        up_bnd = self.game_config_zones.get_item(key)[1]
+        incr_size = self.game_config_zones.get_item(key)[2]
+        self.game_config_zones.set_item(key, [ \
+            max(low_bnd - incr_size, 0),
+            max(up_bnd - incr_size, incr_size), incr_size])
 
     def update_zone(self, *arg):
         all_keys = self.game_config_range.find_all_keys()

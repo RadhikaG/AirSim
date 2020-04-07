@@ -3,11 +3,13 @@ import AirSimClient as airsim
 
 import os, sys
 import json
-from game_config import AirlearningGameConfigHandler
+#from game_config import AirlearningGameConfigHandler
+from game_config import RoborunGameConfigHandler
 
 class EnvRandomizer():
     def __init__(self):
-        self.game_config_handler = AirlearningGameConfigHandler()
+        #self.game_config_handler = AirlearningGameConfigHandler()
+        self.game_config_handler = RoborunGameConfigHandler()
         self.cur_zone_number_buff = 0
         # tracks number of times randomized till now
         self.episodeN = 0
@@ -35,17 +37,17 @@ class EnvRandomizer():
         self.airsim_reset()
 
     def ease_randomization(self):
-        for k, v in settings.environment_change_frequency.items():
-            settings.environment_change_frequency[k] += settings.ease_constant
+        for k, v in roborun_settings.environment_change_frequency.items():
+            roborun_settings.environment_change_frequency[k] += roborun_settings.ease_constant
 
     def tight_randomization(self):
-        for k, v in settings.environment_change_frequency.items():
-            settings.environment_change_frequency[k] = max(
-                settings.environment_change_frequency[k] - settings.ease_constant, 1)
+        for k, v in roborun_settings.environment_change_frequency.items():
+            roborun_settings.environment_change_frequency[k] = max(
+                roborun_settings.environment_change_frequency[k] - roborun_settings.ease_constant, 1)
 
     def randomize_env(self):
         vars_to_randomize = []
-        for k, v in settings.environment_change_frequency.items():
+        for k, v in roborun_settings.environment_change_frequency.items():
             if (self.episodeN+1) %  v == 0:
                 vars_to_randomize.append(k)
 
@@ -85,4 +87,4 @@ class EnvRandomizer():
 
     def init_difficulty_level(self, difficulty_level):
         #print("EnvRandomizer: " + difficulty_level)
-        self.init_again(eval("settings." + difficulty_level + "_range_dic"))
+        self.init_again(eval("roborun_settings." + difficulty_level + "_range_dic"))

@@ -1,4 +1,4 @@
-import settings 
+import roborun_settings 
 import AirSimClient as airsim
 
 import numpy as np
@@ -9,6 +9,7 @@ import time
 from EnvRandomizer import EnvRandomizer
 
 env_rand = EnvRandomizer()
+env_rand.init_difficulty_level("medium")
 
 client = env_rand.get_airsim_client()
 
@@ -29,13 +30,12 @@ try:
         client.moveByVelocity(0, 0, -2, 2, drivetrain=0)
         airsim.AirSimClientBase.wait_key('Press any key to randomize')
 
-        #if x == 3:
-        #    env_rand.init_difficulty_level("medium")
-        #if x == 6:
-        #    env_rand.init_difficulty_level("hard")
-        env_rand.init_difficulty_level("medium")
+        #if x >= 3:
+        #    env_rand.game_config_handler.decrement_zone("SpreadOfObjects")
+        #else:
+        #    env_rand.game_config_handler.increment_zone("SpreadOfObjects")
 
-        env_rand.ease_randomization()
+        #env_rand.ease_randomization()
 
 except(KeyboardInterrupt):
     pass

@@ -1,5 +1,6 @@
 import os
 import math
+import numpy as np
 
 # ---------------------------
 # imports 
@@ -24,7 +25,7 @@ json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen-ue4-my\\Build\\Win
 # ---------------------------
 # how many zones for each variable for the entire range. Note that frequency
 # of moving to a new zone is not determined here
-zone_dic = {"Seed": 1, "NumberOfDynamicObjects": 1, "MinimumDistance": 1, "VelocityRange": 1, "End": 4, "SpreadOfObstacles": 3}  # pay attention
+zone_dic = {"Seed": 1, "NumberOfDynamicObjects": 1, "MinimumDistance": 1, "VelocityRange": 1, "End": 4, "SpreadOfObjects": 3}  # pay attention
 
 # update_zone_success_threshold = 50
 acceptable_success_rate_to_update_zone = .3  # after what ration of success up the zone # pay attention
@@ -57,9 +58,10 @@ default_range_dic = easy_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                                       # for the more "organic" env-gen for
                                       # roborun
                                       "GridSize": [5],
-                                      "PeakCongestion": [0.33, 0.5],
-                                      "SpreadOfObjects": [[0.2, 0.5], [0.5, 1.0], [1.0, 2.0]],
-                                      "Centroids": [[]]
+                                      "PeakCongestion": list(np.linspace(0.3, 0.5)),
+                                      #"SpreadOfObjects": [list(np.linspace(0.2, 0.5)), list(np.linspace(0.5, 1.0)), list(np.linspace(1.0, 2.0))],
+                                      "SpreadOfObjects": list(np.linspace(0.2, 2.0)),
+                                      #"Centroids": [[]]
                                       }
 
 medium_range_dic = {"End": zone_dic["End"] * ["Mutable"],
@@ -67,18 +69,19 @@ medium_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                     "EnvType": ["Indoor"],
                     "ArenaSize": [[60, 60, 20]],
                     "PlayerStart": [[0, 0, 0]],
-                    "NumberOfDynamicObjects": list(range(0, 0)),
+                    "NumberOfDynamicObjects": list(range(0, 1)),
                     "Walls1": [[255, 255, 10]],
                     "Seed": list(range(0, 5000)),
                     "VelocityRange": [[0, 3]],
                     "Name": ["Name"],
-                    "NumberOfObjects": list(range(0, 0)),
+                    "NumberOfObjects": list(range(0, 1)),
                     # for the more "organic" env-gen for
                     # roborun
                     "GridSize": [5],
-                    "PeakCongestion": [0.5, 0.67],
-                    "SpreadOfObjects": [[0.2, 0.5], [0.5, 1.0], [1.0, 2.0]],
-                    "Centroids": [[]]
+                    "PeakCongestion": list(np.linspace(0.5, 0.7, 20)),
+                    #"SpreadOfObjects": [list(np.linspace(0.2, 0.5)), list(np.linspace(0.5, 1.0)), list(np.linspace(1.0, 2.0))],
+                    "SpreadOfObjects": list(np.linspace(0.2, 2.0)),
+                    #"Centroids": [[]]
                     }
 
 hard_range_dic = {"End": zone_dic["End"] * ["Mutable"],
@@ -95,9 +98,10 @@ hard_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                   # for the more "organic" env-gen for
                   # roborun
                   "GridSize": [5],
-                  "PeakCongestion": [0.67, 0.8],
-                  "SpreadOfObjects": [[0.2, 0.5], [0.5, 1.0], [1.0, 2.0]],
-                  "Centroids": [[]]
+                  "PeakCongestion": list(np.linspace(0.7, 0.9, 20)),
+                  #"SpreadOfObjects": [list(np.linspace(0.2, 0.5)), list(np.linspace(0.5, 1.0)), list(np.linspace(1.0, 2.0))],
+                  "SpreadOfObjects": list(np.linspace(0.2, 2.0)),
+                  #"Centroids": [[]]
                   }
 
 
