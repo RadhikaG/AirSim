@@ -1,4 +1,5 @@
 import roborun_settings
+# we don't care about zones in roborun, so leaving this empty
 import os
 from .game_config_class import *
 import copy
@@ -182,13 +183,13 @@ class RoborunGameConfigHandler:
             # corner cases
             if el in ["Indoor", "GameSetting"]:  # make sure to not touch indoor, cause it'll mess up the keys within it
                 continue
-            print(el + str(self.game_config_zones.get_item(el)))
+            #print(el + str(self.game_config_zones.get_item(el)))
             low_bnd = self.game_config_zones.get_item(el)[0]
             up_bnd = self.game_config_zones.get_item(el)[1]
 
             range_val = self.game_config_range.get_item(el)[low_bnd:up_bnd]
             random_val = random.choice(range_val)
-            print("random " + el + ": " + str(random_val))
+            #print("random " + el + ": " + str(random_val))
             self.cur_game_config.set_item(el, random_val)
 
         # end
@@ -240,4 +241,3 @@ class RoborunGameConfigHandler:
             if el in ["Indoor", "GameSetting"]:  # make sure to not touch indoor, cause it'll mess up the keys within it
                 continue
             self.increment_zone(el)
-

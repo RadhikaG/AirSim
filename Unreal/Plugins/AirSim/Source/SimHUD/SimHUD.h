@@ -52,6 +52,10 @@ public:
         return instance_;
     }
 
+	// for explicitly calling from the blueprint
+	UFUNCTION(BlueprintCallable, Category="C++ interface")
+	void createVehiclesAfterPlayerStart();
+
 protected:
     virtual void setupInputBindings();
     std::string reportRefreshHandler();

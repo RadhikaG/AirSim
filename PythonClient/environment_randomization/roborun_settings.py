@@ -18,14 +18,15 @@ os.sys.path.insert(0, proj_root_path + "/environment_randomization")
 # ---------------------------
 
 #json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen-ue4-my\\Content\\JsonFiles\\EnvGenConfig.json"
-json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen-ue4-my\\Build\\WindowsNoEditor\\AirLearning\\Content\\JsonFiles\\EnvGenConfig.json"
+json_file_addr="C:\\Users\\Behzad-PC\\mavbench_stuff\\env-gen\\Build\\WindowsNoEditor\\AirLearning\\Content\\JsonFiles\\EnvGenConfig.json"
 
 # ---------------------------
 # zoning
 # ---------------------------
 # how many zones for each variable for the entire range. Note that frequency
 # of moving to a new zone is not determined here
-zone_dic = {"Seed": 1, "NumberOfDynamicObjects": 1, "MinimumDistance": 1, "VelocityRange": 1, "End": 4, "SpreadOfObjects": 3}  # pay attention
+# we don't care about zones in roborun, so leaving this empty
+zone_dic = {"Seed": 1, "End": 1}  # pay attention
 
 # update_zone_success_threshold = 50
 acceptable_success_rate_to_update_zone = .3  # after what ration of success up the zone # pay attention
@@ -44,64 +45,33 @@ slow_down_activation_distance = 2 * success_distance_to_goal  # detrmines at whi
 # ---------------------------
 # TODO: set default to something besides easy or fix the number of Mutables equal
 
-default_range_dic = easy_range_dic = {"End": zone_dic["End"] * ["Mutable"],
-                                      "MinimumDistance": [2],
-                                      "EnvType": ["Indoor"],
-                                      "ArenaSize": [[50, 50, 20]],
-                                      "PlayerStart": [[0, 0, 0]],
-                                      "NumberOfDynamicObjects": list(range(0, 0)),
-                                      "Walls1": [[255, 255, 10]],
-                                      "Seed": list(range(0, 10000)),
-                                      "VelocityRange": [[5, 25]],
-                                      "Name": ["Name"],
-                                      "NumberOfObjects": list(range(0, 0)),
-                                      # for the more "organic" env-gen for
-                                      # roborun
-                                      "GridSize": [5],
-                                      "PeakCongestion": list(np.linspace(0.3, 0.5)),
-                                      #"SpreadOfObjects": [list(np.linspace(0.2, 0.5)), list(np.linspace(0.5, 1.0)), list(np.linspace(1.0, 2.0))],
-                                      "SpreadOfObjects": list(np.linspace(0.2, 2.0)),
-                                      #"Centroids": [[]]
-                                      }
+# we won't be using the difficulty levels this time, and instead
+# manually expose the gaussian params through the experiment json config
 
-medium_range_dic = {"End": zone_dic["End"] * ["Mutable"],
-                    "MinimumDistance": [2],
-                    "EnvType": ["Indoor"],
-                    "ArenaSize": [[60, 60, 20]],
-                    "PlayerStart": [[0, 0, 0]],
-                    "NumberOfDynamicObjects": list(range(0, 1)),
-                    "Walls1": [[255, 255, 10]],
-                    "Seed": list(range(0, 5000)),
-                    "VelocityRange": [[0, 3]],
-                    "Name": ["Name"],
-                    "NumberOfObjects": list(range(0, 1)),
-                    # for the more "organic" env-gen for
-                    # roborun
-                    "GridSize": [5],
-                    "PeakCongestion": list(np.linspace(0.5, 0.7, 20)),
-                    #"SpreadOfObjects": [list(np.linspace(0.2, 0.5)), list(np.linspace(0.5, 1.0)), list(np.linspace(1.0, 2.0))],
-                    "SpreadOfObjects": list(np.linspace(0.2, 2.0)),
-                    #"Centroids": [[]]
-                    }
+# setting some defaults
 
-hard_range_dic = {"End": zone_dic["End"] * ["Mutable"],
+default_range_dic = gaussian_range_dic = {"End": zone_dic["End"] * ["Mutable"],
                   "MinimumDistance": [4],
                   "EnvType": ["Indoor"],
-                  "ArenaSize": [[30, 30, 10]],
-                  "PlayerStart": [[0, 0, 0]],
-                  "NumberOfDynamicObjects": list(range(0, 0)),
+                  "NumberOfDynamicObjects": list(range(0, 1)),
                   "Walls1": [[255, 255, 10]],
                   "Seed": list(range(0, 5000)),
                   "VelocityRange": [[5, 25]],
                   "Name": ["Name"],
-                  "NumberOfObjects": list(range(0, 0)),
+                  "NumberOfObjects": list(range(0, 1)),
                   # for the more "organic" env-gen for
                   # roborun
+                  "ArenaSize": [[120, 120, 10]],
+                  "PlayerStart": [[0, 0, 0]],
+                  "End": [[20, 20, 20]],
+                  "Centroid1": [[-1]],
+                  "Centroid2": [[-1]],
+                  "Centroid3": [[-1]],
                   "GridSize": [5],
-                  "PeakCongestion": list(np.linspace(0.7, 0.9, 20)),
-                  #"SpreadOfObjects": [list(np.linspace(0.2, 0.5)), list(np.linspace(0.5, 1.0)), list(np.linspace(1.0, 2.0))],
-                  "SpreadOfObjects": list(np.linspace(0.2, 2.0)),
-                  #"Centroids": [[]]
+                  "PeakCongestion": list(np.linspace(0.3, 0.9)),
+                  "SpreadOfObstacles": list(np.linspace(10, 30)),
+                  "GapSize": list(np.linspace(5.0, 8.0)),
+                  "EnvGenFlavor": ["gaussian"]
                   }
 
 
@@ -122,7 +92,7 @@ max_zone = zone_dic["End"]  # should be equal to mutable or total number of zone
 end_randomization_mode = "inclusive"  # whether each level of difficulty should be inclusive (including the previous level) or exclusive
 
 # how frequently to update the environment this is based on epides
-environment_change_frequency = {"Seed": 1, "NumberOfObjects": 10, "End": 1, "PeakCongestion": 1, "SpreadOfObjects": 1}
+environment_change_frequency = {"Seed": 1, "PeakCongestion": 1, "SpreadOfObstacles": 1, "GapSize": 1}
 
 # ------------------------------------------------------------
 #                               -Drone related-

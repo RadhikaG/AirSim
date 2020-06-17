@@ -502,8 +502,6 @@ VehiclePawnWrapper* ASimModeBase::getFpvVehiclePawnWrapper() const
 
 
 
-
-
 std::string ASimModeBase::getReport()
 
 {

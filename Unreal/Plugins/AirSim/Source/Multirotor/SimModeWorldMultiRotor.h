@@ -26,14 +26,12 @@ public:
     std::string getLogString() const;
     virtual std::unique_ptr<msr::airlib::ApiServerBase> createApiServer() const override;
 
-
 protected:
     typedef AFlyingPawn TMultiRotorPawn;
 
     virtual void createVehicles(std::vector<VehiclePtr>& vehicles) override;
     VehiclePtr createVehicle(VehiclePawnWrapper* wrapper);
     virtual void setupClockSpeed() override;
-
 
 private:
     void setupVehiclesAndCamera(std::vector<VehiclePtr>& vehicles);

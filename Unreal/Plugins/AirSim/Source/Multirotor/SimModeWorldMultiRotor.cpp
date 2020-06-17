@@ -75,6 +75,10 @@ void ASimModeWorldMultiRotor::setupVehiclesAndCamera(std::vector<VehiclePtr>& ve
 {
     //get player controller
     APlayerController* player_controller = this->GetWorld()->GetFirstPlayerController();
+	// radhika: fix for adjusting player_controller's camera to point to the
+	// new PlayerStart spawned in the environment. Arguments to the function are just
+	// placeholders.
+	player_controller->NotifyLoadedWorld("blah", false);
     FTransform actor_transform = player_controller->GetViewTarget()->GetActorTransform();
     //put camera little bit above vehicle
     FTransform camera_transform(actor_transform.GetLocation() + FVector(-300, 0, 200));

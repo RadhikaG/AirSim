@@ -28,7 +28,6 @@ void ASimModeWorldBase::BeginPlay()
     }
 }
 
-
 void ASimModeWorldBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     //remove everything that we created in BeginPlay
@@ -153,4 +152,3 @@ void ASimModeWorldBase::createVehicles(std::vector<VehiclePtr>& vehicles)
     //should be overridden by derived class
     //Unreal doesn't allow pure abstract methods in actors
 }
-

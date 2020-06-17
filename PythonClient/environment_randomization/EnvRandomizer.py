@@ -71,7 +71,8 @@ class EnvRandomizer():
         self.game_config_handler.sample(*arg)
 
     def airsim_reset(self):
-        self.airsim_client = self.airsim_client.resetUnreal(5)
+        print("Resetting Unreal...")
+        self.airsim_client = self.airsim_client.resetUnreal(1, 1)
 
         client = self.airsim_client
         client.confirmConnection()
@@ -81,10 +82,3 @@ class EnvRandomizer():
         self.episodeN += 1
 
         return self.airsim_client
-
-    def get_airsim_client(self):
-        return self.airsim_client
-
-    def init_difficulty_level(self, difficulty_level):
-        #print("EnvRandomizer: " + difficulty_level)
-        self.init_again(eval("roborun_settings." + difficulty_level + "_range_dic"))

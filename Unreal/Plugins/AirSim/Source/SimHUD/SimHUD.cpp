@@ -25,12 +25,12 @@ void ASimHUD::BeginPlay()
 
     try {
         UAirBlueprintLib::OnBeginPlay();
-        initializeSettings();
-        setUnrealEngineSettings();
-        createSimMode();
-        createMainWidget();
-        setupInputBindings();
-        startApiServer();
+        //initializeSettings();
+        //setUnrealEngineSettings();
+        //createSimMode();
+        //createMainWidget();
+        //setupInputBindings();
+        //startApiServer();
     }
     catch (std::exception& ex) {
         UAirBlueprintLib::LogMessageString("Error at startup: ", ex.what(), LogDebugLevel::Failure);
@@ -42,12 +42,13 @@ void ASimHUD::BeginPlay()
 
 void ASimHUD::Tick(float DeltaSeconds)
 {
-    // this is bad, this should be in SimModeBase.cpp instead, but there's no
-    // way of accessing the rpc server from there
-    checkUnrealReset();
-
-    if (simmode_ && simmode_->EnableReport)
-        widget_->updateReport(simmode_->getReport());
+	if (simmode_) {
+		// this is bad, this should be in SimModeBase.cpp instead, but there's no
+		// way of accessing the rpc server from there
+		checkUnrealReset();
+		if (simmode_->EnableReport)
+			widget_->updateReport(simmode_->getReport());
+	}
 }
 
 void ASimHUD::checkUnrealReset()
@@ -56,6 +57,18 @@ void ASimHUD::checkUnrealReset()
         api_server_->unSetUnrealReset();
         UGameplayStatics::OpenLevel(this, FName(*(this->GetWorld()->GetName()), false));
     }
+}
+
+// radhika's additions: we init the rest of the HUD after spawning the
+// player start in the map
+void ASimHUD::createVehiclesAfterPlayerStart()
+{
+	initializeSettings();
+	setUnrealEngineSettings();
+	createSimMode();
+	createMainWidget();
+	setupInputBindings();
+	startApiServer();
 }
 
 void ASimHUD::EndPlay(const EEndPlayReason::Type EndPlayReason)
